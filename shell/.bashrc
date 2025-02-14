@@ -111,11 +111,6 @@ fi
 # starship
 eval "$(starship init bash)"
 
-# source dotfiles
-[[ -f ~/.aliases ]] && source ~/.aliases
-[[ -f ~/.path ]] && source ~/.path
-[[ -f ~/.unique_config ]] && source ~/.unique_config
-
 # conda
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -133,3 +128,8 @@ if command -v conda &> /dev/null; then
     unset __conda_setup
     # <<< conda initialize <<<
 fi
+
+# source dotfiles
+[[ -f ~/.aliases ]] && source ~/.aliases
+[[ -f ~/.path ]] && source ~/.path
+[[ -f ~/.unique_config ]] && source ~/.unique_config
