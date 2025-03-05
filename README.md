@@ -1,4 +1,4 @@
-# YJC's dotfiles
+# Steven's dotfiles
 
 ## ✨ 介绍
 这是我的的个人代码环境自动化部署工具，为 Zsh + Noevim + Tmux 工作流而设计
