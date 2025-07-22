@@ -5,7 +5,7 @@ echo "🔐 Requesting sudo password..."
 sudo -v
 
 # 定义 dotfiles 目录
-DOTFILES_DIR="$HOME/dotfiles"
+source "$(dirname "$0")/scripts/env.sh"
 cd "$DOTFILES_DIR"
 
 # 解析参数
@@ -47,95 +47,17 @@ stow_module() {
 chmod +x ./install_tools.sh && ./install_tools.sh
 ask_install "stow" && sudo apt update && sudo apt install -y stow
 
-# shell
-sleep 2
-clear
-if command -v zsh > /dev/null && ! $RE_INSTALL ; then
-    echo -e "\033[1;32m✅ zsh 已安装，跳过...\033[0m"
-    rm -f ~/.zshrc
-    rm -f ~/.bashrc
-    stow_module "shell"
-else
-    echo -e "\033[1;36m🔹 正在安装 shell, 请选择要进行的操作\033[0m"
-    echo "[1] 安装 zsh 并设为默认终端"
-    echo "[2] 安装 zsh 但依然使用 bash"
-    echo "[3] 不安装 zsh"
-    echo "[else] 跳过"
+ask_install "shell" && chmod +x ./scripts/install_shell.sh && ./scripts/install_shell.sh
+ask_install "starship" && chmod +x ./scripts/install_starship.sh && ./scripts/install_starship.sh
+ask_install "autojump" && chmod +x ./scripts/install_autojump.sh && ./scripts/install_autojump.sh
+chmod +x ./scripts/stow_git_vim.sh && ./scripts/stow_git_vim.sh
 
-    read -r shell_choice
-    case $shell_choice in
-        1)
-            sudo apt install -y zsh
-	    rm -rf "$HOME/.oh-my-zsh"
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-
-            ZSH_CUSTOM="$HOME/.oh-my-zsh/plugins"
-            git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/zsh-syntax-highlighting"
-            git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM/zsh-autosuggestions"
-            git clone https://github.com/jeffreytse/zsh-vi-mode.git "$ZSH_CUSTOM/zsh-vi-mode"
-
-            rm -f ~/.zshrc
-            rm -f ~/.bashrc
-            stow_module "shell"
-            sudo chsh -s "$(command -v zsh)" "$USER"
-            ;;
-        2)
-            sudo apt install -y zsh
-	    rm -rf "$HOME/.oh-my-zsh"
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-
-            ZSH_CUSTOM="$HOME/.oh-my-zsh/custom/plugins"
-            git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/zsh-syntax-highlighting"
-            git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM/zsh-autosuggestions"
-            git clone https://github.com/jeffreytse/zsh-vi-mode.git "$ZSH_CUSTOM/zsh-vi-mode"
-
-            rm -f ~/.zshrc
-            rm -f ~/.bashrc
-            stow_module "shell"
-            echo "已安装 zsh，但继续使用 bash 作为默认终端。"
-            ;;
-        3)
-            echo "不安装 zsh。"
-            rm -f ~/.zshrc
-            rm -f ~/.bashrc
-            stow_module "shell"
-            ;;
-        *)
-            echo "跳过"
-            ;;
-    esac
-fi
-
-# Starship
-ask_install "starship" && curl -sS https://starship.rs/install.sh | sh -s -- -y 
-stow_module "starship"
-
-# Autojump
-ask_install "autojump" && sudo apt install -y autojump
-
-# Git、Vim 配置
-stow_module "git"
-stow_module "vim"
-
-# Neovim
 if ask_install "nvim"; then
-    chmod +x ./install_nvim.sh && ./install_nvim.sh
+    chmod +x ./scripts/install_nvim.sh && ./scripts/install_nvim.sh
     stow_module "nvim"
 fi
 
-# Tmux
-ask_install "tmux" && sudo apt install tmux
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-    echo -e "\033[1;36m🔹 正在安装 tmux 插件管理器\033[0m"
-    mkdir -p "$HOME/.tmux/plugins"
-    git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
-fi
-if [ ! -d "$HOME/.tmux/plugins/catppuccin" ]; then
-    echo -e "\033[1;36m🔹 正在安装 tmux catppuccin 主题 tpm\033[0m"
-    mkdir -p "$HOME/.tmux/plugins/catppuccin"
-    git clone https://github.com/catppuccin/tmux.git ~/.tmux/plugins/catppuccin/tmux
-fi
-stow_module "tmux"
+ask_install "tmux" && chmod +x ./scripts/install_tmux.sh && ./scripts/install_tmux.sh
 
 sleep 2
 clear
