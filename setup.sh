@@ -9,16 +9,19 @@ source "$(dirname "$0")/scripts/env.sh"
 source "$(dirname "$0")/scripts/utils.sh"
 cd "$DOTFILES_DIR"
 
-# 安装工具集
-chmod +x ./install_tools.sh && ./install_tools.sh
-ask_install "stow" && sudo apt update && sudo apt install -y stow
+# 安装前准备
+sudo apt update
+chmod +x ./scripts/*.sh
+./scripts/install_tools.sh
 
-ask_install "shell" && chmod +x ./scripts/install_shell.sh && ./scripts/install_shell.sh
-ask_install "starship" && chmod +x ./scripts/install_starship.sh && ./scripts/install_starship.sh
-ask_install "autojump" && chmod +x ./scripts/install_autojump.sh && ./scripts/install_autojump.sh
-chmod +x ./scripts/stow_git_vim.sh && ./scripts/stow_git_vim.sh
-ask_install "nvim" && chmod +x ./scripts/install_nvim.sh && ./scripts/install_nvim.sh && stow_module "nvim"
-ask_install "tmux" && chmod +x ./scripts/install_tmux.sh && ./scripts/install_tmux.sh && stow_module "tmux"
+# 安装各个模块
+./scripts/install_vim.sh
+./scripts/install_git.sh
+ask_install "shell" && ./scripts/install_shell.sh
+ask_install "starship" && ./scripts/install_starship.sh
+ask_install "autojump" && ./scripts/install_autojump.sh
+ask_install "nvim" && ./scripts/install_nvim.sh && stow_module "nvim"
+ask_install "tmux" && ./scripts/install_tmux.sh && stow_module "tmux"
 
 sleep 2
 clear

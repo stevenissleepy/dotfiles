@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e  # 在出现错误时停止脚本
 
-TMP_DIR="$HOME/tmp"
+source "$(dirname "$0")/env.sh"
 
 # 安装 build-essential
 install_build_essential() {
@@ -28,28 +28,24 @@ install_cmake() {
     sleep 2
     clear
     if ! command -v cmake &> /dev/null; then
-        echo -e "\033[1;36m🔹 正在安装 cmake ...\033[0m"
-        CMAKE_VERSION="3.30.1"  # 设置所需的 CMake 版本
-
-        # 下载 CMake 源代码
-        cd $TMP_DIR
-        wget "https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.tar.gz"
-        tar -zxvf "cmake-${CMAKE_VERSION}.tar.gz"
-        
-        # 进入解压目录并编译安装
-        cd "cmake-${CMAKE_VERSION}"
-        ./bootstrap  # 运行配置脚本
-        make -j$(nproc)  # 使用多核编译
-        sudo make install  # 安装到系统目录
-
-        # 清理安装文件
-        cd ..
-        rm -rf "cmake-${CMAKE_VERSION}" "cmake-${CMAKE_VERSION}.tar.gz"
+        echo -e "\033[1;36m🔹 正在安装 cmake 与 Ninja ...\033[0m"
+        sudo apt install -y cmake ninja-build
     else
         echo -e "\033[1;32m✅ cmake 已安装，跳过...\033[0m"
     fi
 }
 
+# 安装 stow
+install_stow() {
+    sleep 2
+    clear
+    if ! command -v stow &> /dev/null; then
+        echo -e "\033[1;36m🔹 正在安装 stow ...\033[0m"
+        sudo apt install -y stow
+    else
+        echo -e "\033[1;32m✅ stow 已安装，跳过...\033[0m"
+    fi
+}
 
 # 主执行流程
 mkdir -p $TMP_DIR
@@ -57,5 +53,6 @@ mkdir -p $TMP_DIR
 install_build_essential
 install_python
 install_cmake
+install_stow
 
 rm -rf $TMP_DIR
