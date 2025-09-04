@@ -1,16 +1,15 @@
 import os
 import shutil
 import subprocess
-from pathlib import Path
 
 from .installer import Installer
-from .config import tmp_dir, miniconda_path
+from .config import tmp_dir, miniconda_path, miniconda_url
 
 
 class CondaInstaller(Installer):
     def __init__(self):
         super().__init__("conda")
-        self.url = "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86.sh"
+        self.url = miniconda_url
         self.installer_path = tmp_dir / "miniconda_installer.sh"
         self.install_path = miniconda_path
 
@@ -28,13 +27,21 @@ class CondaInstaller(Installer):
 
         # 下载并安装 Miniconda
         print("Installing Miniconda...")
-        self.install_path.mkdir(parents=True, exist_ok=True)
         subprocess.run(["curl", "-o", str(self.installer_path), self.url], check=True)
-        subprocess.run(["bash", str(self.installer_path), "-b", "-p", str(self.install_path)], check=True)
+        subprocess.run(
+            [
+                "bash",
+                str(self.installer_path),
+                "-b",
+                "-u",
+                "-p",
+                str(self.install_path),
+            ],
+            check=True,
+        )
         subprocess.run([str(self.install_path / "bin" / "conda"), "init"], check=True)
 
         print("Conda installation complete. Please restart your shell.")
 
-    def install_dependencies(self):
+    def pre_install(self):
         pass
-

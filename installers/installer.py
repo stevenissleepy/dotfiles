@@ -14,5 +14,5 @@ class Installer(ABC):
         pass
 
     @abstractmethod
-    def install_dependencies(self):
+    def pre_install(self):
         pass

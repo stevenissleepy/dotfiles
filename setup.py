@@ -1,5 +1,3 @@
-
-
 from installers import CondaInstaller
 
 
@@ -7,7 +5,7 @@ def main():
     installers = [CondaInstaller()]
 
     for installer in installers:
-        installer.install_dependencies()
+        installer.pre_install()
         installer.install()
 
 if __name__ == "__main__":
