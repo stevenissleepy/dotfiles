@@ -37,9 +37,9 @@ class CondaInstaller(Installer):
             ],
             check=True,
         )
-        subprocess.run([str(self.install_path / "bin" / "conda"), "init"], check=True)
 
-        self.info("Conda installation complete. Please restart your shell.")
+        # 配置 Conda
+        self.post_install()
 
     def pre_install(self) -> bool:
         # 检查 Conda 是否已安装
@@ -56,3 +56,22 @@ class CondaInstaller(Installer):
             return False
 
         return True
+
+    def post_install(self):
+        # 修改环境变量
+        subprocess.run([str(self.install_path / "bin" / "conda"), "init"], check=True)
+
+        # 关闭 conda base 环境的自动激活
+        subprocess.run(
+            [
+                str(self.install_path / "bin" / "conda"),
+                "config",
+                "--set",
+                "auto_activate",
+                "false",
+            ],
+            check=True,
+        )
+
+        self.info("Conda installation complete.")
+        pass

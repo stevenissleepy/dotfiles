@@ -14,7 +14,11 @@ class Installer(ABC):
         pass
 
     @abstractmethod
-    def pre_install(self):
+    def pre_install(self) -> bool:
+        pass
+    
+    @abstractmethod
+    def post_install(self):
         pass
 
     def info(self, str = ""):
