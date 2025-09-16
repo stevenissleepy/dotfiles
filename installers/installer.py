@@ -16,3 +16,6 @@ class Installer(ABC):
     @abstractmethod
     def pre_install(self):
         pass
+
+    def info(self, str = ""):
+        print(f"\033[33m{str}\033[0m")

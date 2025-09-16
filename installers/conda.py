@@ -19,14 +19,12 @@ class CondaInstaller(Installer):
     def install(self):
         os.system("clear")
 
-        # 检查 Conda 是否已安装
-        print("Checking if Conda is already installed...")
-        if self.is_installed():
-            print("Conda is already installed.")
+        # 是否需要安装 Conda
+        if not self.pre_install():
             return
 
         # 下载并安装 Miniconda
-        print("Installing Miniconda...")
+        self.info("Installing Miniconda...")
         subprocess.run(["curl", "-o", str(self.installer_path), self.url], check=True)
         subprocess.run(
             [
@@ -41,7 +39,20 @@ class CondaInstaller(Installer):
         )
         subprocess.run([str(self.install_path / "bin" / "conda"), "init"], check=True)
 
-        print("Conda installation complete. Please restart your shell.")
+        self.info("Conda installation complete. Please restart your shell.")
 
-    def pre_install(self):
-        pass
+    def pre_install(self) -> bool:
+        # 检查 Conda 是否已安装
+        if self.is_installed():
+            self.info("Conda is already installed. Do you want to reinstall it? (Y/n)")
+
+        # 直接询问用户是否继续安装
+        else:
+            self.info("Conda is not installed. Do you want to install it? (Y/n)")
+
+        choice = input().strip().lower()
+        if choice == "n":
+            self.info("Skipping Conda installation.")
+            return False
+
+        return True
