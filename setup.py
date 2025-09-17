@@ -1,14 +1,15 @@
 import subprocess
 
-from installers import CondaInstaller, ZshInstaller
+from installers import CondaInstaller, ZshInstaller, StarshipInstaller
 
 
 def main():
     subprocess.run(["sudo", "-v"], check=True)
 
     installers = [
-        # CondaInstaller(),
-        ZshInstaller()
+        CondaInstaller(),
+        ZshInstaller(),
+        StarshipInstaller(),
     ]
 
     for installer in installers:

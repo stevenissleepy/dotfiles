@@ -29,3 +29,8 @@ omz_plugins_urls = {
     "zsh-syntax-highlighting": "https://gitee.com/mirrors/zsh-syntax-highlighting.git",
     "zsh-vi-mode": "https://gitee.com/mirrors_jeffreytse/zsh-vi-mode.git",
 }
+
+# starship
+starship_url = "https://gh.llkk.cc/https://github.com/starship/starship/releases"
+starship_installer_url = "https://starship.rs/install.sh"
+starship_installer_path = tmp_dir / "starship_install.sh"
