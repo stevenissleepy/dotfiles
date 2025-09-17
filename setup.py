@@ -1,8 +1,15 @@
-from installers import CondaInstaller
+import subprocess
+
+from installers import CondaInstaller, ZshInstaller
 
 
 def main():
-    installers = [CondaInstaller()]
+    subprocess.run(["sudo", "-v"], check=True)
+
+    installers = [
+        # CondaInstaller(),
+        ZshInstaller()
+    ]
 
     for installer in installers:
         installer.install()

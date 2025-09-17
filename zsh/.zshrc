@@ -101,8 +101,8 @@ fi
 # export ARCHFLAGS="-arch x86_64"
 
 # source dotfiles
-[[ -f ~/.aliases ]] && source ~/.aliases
-[[ -f ~/.path ]] && source ~/.path
+[[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
+[[ -f ~/.zsh_path ]] && source ~/.zsh_path
 [[ -f ~/.unique_config ]] && source ~/.unique_config
 
 # autojump

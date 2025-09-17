@@ -5,14 +5,8 @@ alias aptup='sudo apt update && sudo apt upgrade'
 alias gss='git status -s'
 alias gs='git status'
 
-# Vscode
-alias chae='code . && exit'
-
 # CMake
 alias cbuild='cmake -B build && cmake --build build'
-
-# clash
-alias clash_on='sudo bash ~/tools/clash-for-linux/start.sh'
 
 # On Android Termux
 if [[ "$(uname -s)" == "Linux" && -f /system/build.prop ]]; then
