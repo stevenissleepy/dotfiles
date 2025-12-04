@@ -20,18 +20,27 @@ class ZshInstaller(Installer):
     def __init__(self):
         super().__init__("zsh")
 
-    def is_installed(self):
-        return shutil.which("zsh") is not None
+    def ask_install(self):
+        # 检查 zsh 是否已安装
+        if shutil.which("zsh") is not None:
+            self.info("zsh is already installed. Do you want to reinstall it? (Y/n)")
+        
+        # 直接询问用户是否继续安装
+        else:
+            self.info("zsh is not installed. Do you want to install it? (Y/n)")
+
+        choice = input().strip().lower()
+        if choice == "n":
+            self.info("Skipping zsh installation.")
+            return False
+
+        return True
+
+    def pre_install(self) -> bool:
+        pass
 
     def install(self):
-        os.system("clear")
-
-        # 是否需要安装 Zsh
-        if not self.pre_install():
-            return
-
-        # 安装 Zsh
-        self.info("Installing Zsh...")
+        self.info("Installing zsh...")
         subprocess.run(["sudo", "apt-get", "install", "-y", "zsh"], check=True)
 
         # 安装 oh-my-zsh
@@ -53,33 +62,11 @@ class ZshInstaller(Installer):
             if not plugin_path.exists():
                 subprocess.run(["git", "clone", url, str(plugin_path)], check=True)
 
-        # 配置 Zsh
-        self.post_install()
-
-    def pre_install(self) -> bool:
-        # 检查并询问用户是否继续安装
-        if self.is_installed():
-            self.info("Zsh is already installed. Do you want to reinstall it? (Y/n)")
-        else:
-            self.info("Zsh is not installed. Do you want to install it? (Y/n)")
-
-        choice = input().strip().lower()
-        if choice == "n":
-            self.info("Skipping Zsh installation.")
-            return False
-
-        return True
-
     def post_install(self):
-        self.info("Configuring Zsh...")
+        self.info("Configuring zsh...")
 
-        # 设置 Zsh 为默认 shell
+        # 设置 zsh 为默认 shell
         subprocess.run(["sudo", "chsh", "-s", shutil.which("zsh")], check=True)
-
-        # 检查 stow 是否安装
-        if shutil.which("stow") is None:
-            self.info("Stow is not installed. Installing stow...")
-            subprocess.run(["sudo", "apt-get", "install", "-y", "stow"], check=True)
 
         # stow .zshrc
         os.remove(str(zshrc_path)) if zshrc_path.exists() else None

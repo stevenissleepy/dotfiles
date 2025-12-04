@@ -1,6 +1,10 @@
 # apt
 alias aptup='sudo apt update && sudo apt upgrade'
 
+# eza
+alias ls='eza --icons'
+alias tree='ls -T'
+
 # Git
 alias gss='git status -s'
 alias gs='git status'
