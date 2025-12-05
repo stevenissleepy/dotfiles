@@ -28,5 +28,5 @@ starship_installer_url = "https://starship.rs/install.sh"
 starship_installer_path = tmp_dir / "starship_install.sh"
 
 # neovim
-neovim_appimage_url = f"https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-{arch}.appimage"
+neovim_appimage_url = f"https://gitee.com/mirrors/neovim/releases/download/v0.11.5/nvim-linux-{arch}.appimage"
 neovim_appimage_path = "/opt/nvim/nvim.appimage"

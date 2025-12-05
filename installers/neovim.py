@@ -31,10 +31,10 @@ class NeovimInstaller(Installer):
         appimage_path = Path(neovim_appimage_path)
 
         # 删除已有的 AppImage 文件
-        shutil.rmtree(appimage_path, ignore_errors=True)
+        subprocess.run(["sudo", "rm", "-rf", str(appimage_path.parent)], check=True)
+        subprocess.run(["sudo", "mkdir", "-p", str(appimage_path.parent)], check=True)
 
         # 下载 Neovim AppImage
-        appimage_path.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run(["sudo", "curl", "-L", "-o", str(appimage_path), appimage_url], check=True)
         subprocess.run(["sudo", "chmod", "755", str(appimage_path)], check=True)
 
