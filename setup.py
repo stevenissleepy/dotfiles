@@ -2,7 +2,7 @@ import shutil
 import subprocess
 
 from clash import install_clash, clash_start, proxy_on
-from installers import Installer, CondaInstaller, ZshInstaller, StarshipInstaller
+from installers import Installer, CondaInstaller, ZshInstaller, StarshipInstaller, CommonInstaller
 
 
 def main():
@@ -20,9 +20,10 @@ def main():
 
     # 运行各个 installer
     installers = [
-        CondaInstaller(),
+        CommonInstaller(),
         ZshInstaller(),
         StarshipInstaller(),
+        CondaInstaller(),
     ]
     for installer in installers:
         installer.run()

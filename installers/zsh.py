@@ -4,10 +4,6 @@ import subprocess
 
 from .installer import Installer
 from .config import (
-    zshrc_path,
-    zsh_alias_path,
-    zsh_path_path,
-    omz_url,
     omz_path,
     omz_plugins_path,
     omz_plugins_urls,
@@ -48,11 +44,7 @@ class ZshInstaller(Installer):
         shutil.rmtree(omz_path, ignore_errors=True)
         os.remove(str(omz_installer_path)) if omz_installer_path.exists() else None
         subprocess.run(["curl", "-fsSL", omz_installer_url, "-o", str(omz_installer_path)], check=True)
-        subprocess.run(
-            ["bash", str(omz_installer_path), "--unattended", "--keep-zshrc"],
-            env={**os.environ, "REMOTE": omz_url},
-            check=True,
-        )
+        subprocess.run(["sh", str(omz_installer_path), "--unattended", "--keep-zshrc"], check=True)
 
         # 安装 oh-my-zsh 插件
         self.info("Installing oh-my-zsh plugins...")
@@ -69,7 +61,4 @@ class ZshInstaller(Installer):
         subprocess.run(["sudo", "chsh", "-s", shutil.which("zsh")], check=True)
 
         # stow .zshrc
-        os.remove(str(zshrc_path)) if zshrc_path.exists() else None
-        os.remove(str(zsh_alias_path)) if zsh_alias_path.exists() else None
-        os.remove(str(zsh_path_path)) if zsh_path_path.exists() else None
         subprocess.run(["stow", "zsh"], check=True)

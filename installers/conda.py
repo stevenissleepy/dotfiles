@@ -34,7 +34,7 @@ class CondaInstaller(Installer):
 
     def install(self):
         self.info("Installing Miniconda...")
-        # subprocess.run(["curl", "-o", str(self.installer_path), self.url], check=True)
+        subprocess.run(["curl", "-o", str(self.installer_path), self.url], check=True)
         subprocess.run(
             [
                 "bash",

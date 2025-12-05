@@ -20,8 +20,8 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR='nvim'
 
 # source dotfiles
-[[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
-[[ -f ~/.zsh_path ]] && source ~/.zsh_path
+[[ -f ~/.aliases ]] && source ~/.aliases
+[[ -f ~/.path ]] && source ~/.path
 [[ -f ~/.unique_config ]] && source ~/.unique_config
 
 # conda
