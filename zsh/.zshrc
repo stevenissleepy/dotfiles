@@ -1,6 +1,7 @@
 # Starship
 ZSH_THEME=""
 eval "$(starship init zsh)"
+export STARSHIP_CONFIG="$HOME/.config/starship/catppuccin.toml"
 
 # oh-my-zsh 
 plugins=(

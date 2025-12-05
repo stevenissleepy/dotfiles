@@ -1,7 +1,7 @@
 # Catppuccin Mocha Theme (for zsh-syntax-highlighting)
 #
 # Paste this files contents inside your ~/.zshrc before you activate zsh-syntax-highlighting
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main cursor)
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
 typeset -gA ZSH_HIGHLIGHT_STYLES
 
 # Main highlighter styling: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
@@ -21,9 +21,9 @@ ZSH_HIGHLIGHT_STYLES[global-alias]='fg=#a6e3a1'
 ZSH_HIGHLIGHT_STYLES[function]='fg=#a6e3a1'
 ZSH_HIGHLIGHT_STYLES[command]='fg=#a6e3a1'
 ZSH_HIGHLIGHT_STYLES[precommand]='fg=#a6e3a1,italic'
-ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=#fab387,italic'
-ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#fab387'
-ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#fab387'
+ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=#f9e2af,italic'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#f9e2af'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#f9e2af'
 ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=#cba6f7'
 ## Keywords
 ## Built ins
