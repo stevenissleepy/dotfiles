@@ -1,6 +1,7 @@
 import os
 import shutil
 import subprocess
+from getpass import getpass
 
 from clash import install_clash, clash_start, proxy_on
 from installers import (
@@ -16,9 +17,8 @@ from installers import (
 
 def main():
     # get sudo password
-    password = input(f"[sudo] password for {os.environ['USER']}:")
-    os.environ["MY_PASSWORD"] = password
-    subprocess.run(["sudo", "-v"], check=True)
+    password = getpass(f"[sudo] password for {os.environ['USER']}:")
+    subprocess.run(["sudo", "-v"], input=password + "\n", text=True, check=True)
 
     # 安装 clash 并启动
     install_clash()
@@ -34,7 +34,7 @@ def main():
     installers = [
         CommonInstaller(),
         EzaInstaller(),
-        ZshInstaller(),
+        ZshInstaller(password),
         StarshipInstaller(),
         NeovimInstaller(),
         CondaInstaller(),

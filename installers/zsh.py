@@ -14,8 +14,9 @@ from .config import (
 
 
 class ZshInstaller(Installer):
-    def __init__(self):
+    def __init__(self, password: str = ""):
         super().__init__("zsh")
+        self.password_ = password
 
     def ask_install(self):
         # 检查 zsh 是否已安装
@@ -60,7 +61,7 @@ class ZshInstaller(Installer):
 
         # 设置 zsh 为默认 shell
         username = os.environ["USER"]
-        password = os.environ["MY_PASSWORD"] + "\n"
+        password = self.password_ + "\n"
         subprocess.run(["chsh", "-s", shutil.which("zsh"), username], input=password, text=True, check=True)
 
         # stow .zshrc
