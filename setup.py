@@ -15,10 +15,26 @@ from installers import (
 )
 
 
+def sudo_warmup() -> str:
+    password = getpass(f"[sudo] password for {os.environ['USER']}: ")
+    try:
+        subprocess.run(
+            ["sudo", "-S", "-v"],
+            input=password + "\n",
+            text=True,
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    except subprocess.CalledProcessError:
+        print("Sorry, try again.")
+        return sudo_warmup()
+    return password
+
+
 def main():
     # get sudo password
-    password = getpass(f"[sudo] password for {os.environ['USER']}:")
-    subprocess.run(["sudo", "-v"], input=password + "\n", text=True, check=True)
+    password = sudo_warmup()
 
     # 安装 clash 并启动
     install_clash()
