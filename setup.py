@@ -1,3 +1,4 @@
+import os
 import shutil
 import subprocess
 
@@ -14,6 +15,9 @@ from installers import (
 
 
 def main():
+    # get sudo password
+    password = input(f"[sudo] password for {os.environ['USER']}:")
+    os.environ["MY_PASSWORD"] = password
     subprocess.run(["sudo", "-v"], check=True)
 
     # 安装 clash 并启动
