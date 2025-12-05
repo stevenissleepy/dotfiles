@@ -60,9 +60,8 @@ class ZshInstaller(Installer):
         self.info("Configuring zsh...")
 
         # 设置 zsh 为默认 shell
-        username = os.environ["USER"]
         password = self.password_ + "\n"
-        subprocess.run(["chsh", "-s", shutil.which("zsh"), username], input=password, text=True, check=True)
+        subprocess.run(["chsh", "-s", shutil.which("zsh")], input=password + "\n", text=True, check=True)
 
         # stow .zshrc
         zshrc_path = Path.home() / ".zshrc"
