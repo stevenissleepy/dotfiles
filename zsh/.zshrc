@@ -15,9 +15,14 @@ if [[ ! -n $TERMUX_VERSION ]]; then
 fi
 export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
+source $HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 
 # Editor
-export EDITOR='nvim'
+if command -v nvim &> /dev/null; then
+    export VISUAL='nvim'
+else
+    export VISUAL='vim'
+fi
 
 # source dotfiles
 [[ -f ~/.aliases ]] && source ~/.aliases

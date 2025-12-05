@@ -9,7 +9,8 @@ arch = platform.machine()
 tmp_dir = Path("/tmp")
 
 # miniconda
-miniconda_url = f"https://repo.anaconda.com/miniconda/Miniconda3-latest-{system}-{arch}.sh"
+miniconda_installer_url = f"https://repo.anaconda.com/miniconda/Miniconda3-latest-{system}-{arch}.sh"
+miniconda_installer_path = tmp_dir / "miniconda_installer.sh"
 miniconda_path = Path.home() / "tools" / "miniconda3"
 
 # zsh

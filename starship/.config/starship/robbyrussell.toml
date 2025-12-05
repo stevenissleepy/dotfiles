@@ -22,10 +22,10 @@ read_only = ' 🔒'
 
 [git_branch]
 symbol = 'git'
-format = '[$symbol:\([$branch](bold red)\)](bold mauve) '
+format = '[$symbol:\([$branch](bold red)\)](bold mauve) '
 
 [git_status]
-format = '[✗]($style) '
+format = '[✗]($style)  '
 style = "bold yellow"
 
 
