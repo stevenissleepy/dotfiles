@@ -25,7 +25,7 @@ symbol = 'git'
 format = '[$symbol:\([$branch](bold red)\)](bold mauve) '
 
 [git_status]
-format = '[✗]($style)  '
+format = '[$all_status$ahead_behind]($style) '
 style = "bold yellow"
 
 
