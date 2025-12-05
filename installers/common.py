@@ -16,7 +16,6 @@ class CommonInstaller(Installer):
         self.info("Installing common components...")
         subprocess.run(["sudo", "apt", "install", "-y", "git"], check=True)
         subprocess.run(["sudo", "apt", "install", "-y", "vim"], check=True)
-        subprocess.run(["sudo", "apt", "install", "-y", "eza"], check=True)
 
     def post_install(self):
         self.info("configuring bash git vim...")

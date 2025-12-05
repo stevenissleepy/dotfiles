@@ -2,8 +2,10 @@
 alias aptup='sudo apt update && sudo apt upgrade'
 
 # eza
-alias ls='eza --icons'
-alias tree='ls -T'
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --icons'
+  alias tree='ls -T'
+fi
 
 # Git
 alias gss='git status -s'

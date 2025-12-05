@@ -2,7 +2,15 @@ import shutil
 import subprocess
 
 from clash import install_clash, clash_start, proxy_on
-from installers import Installer, CommonInstaller, ZshInstaller, StarshipInstaller, NeovimInstaller, CondaInstaller
+from installers import (
+    Installer,
+    CommonInstaller,
+    EzaInstaller,
+    ZshInstaller,
+    StarshipInstaller,
+    NeovimInstaller,
+    CondaInstaller,
+)
 
 
 def main():
@@ -21,6 +29,7 @@ def main():
     # 运行各个 installer
     installers = [
         CommonInstaller(),
+        EzaInstaller(),
         ZshInstaller(),
         StarshipInstaller(),
         NeovimInstaller(),
