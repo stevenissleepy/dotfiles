@@ -28,6 +28,7 @@ starship_installer_url = "https://starship.rs/install.sh"
 starship_installer_path = tmp_dir / "starship_install.sh"
 
 # neovim
+neovim_glibc_min_version = "2.34"
 neovim_arch = "x86_64" if arch in ["x86_64", "amd64"] else arch
 neovim_arch = "arm64" if arch in ["aarch64", "arm64"] else arch
 neovim_appimage_url = f"https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-{neovim_arch}.appimage"

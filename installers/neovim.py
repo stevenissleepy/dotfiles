@@ -2,7 +2,7 @@ from pathlib import Path
 import shutil
 import subprocess
 from .installer import Installer
-from .config import neovim_appimage_url, neovim_appimage_path
+from .config import neovim_appimage_url, neovim_appimage_path, neovim_glibc_min_version
 
 
 class NeovimInstaller(Installer):
@@ -10,6 +10,14 @@ class NeovimInstaller(Installer):
         super().__init__("neovim")
 
     def ask_install(self) -> bool:
+        # 检查 glibc 版本
+        ldd_output = subprocess.run(["ldd", "--version"], capture_output=True, text=True, check=True)
+        glibc_version = ldd_output.stdout.splitlines()[0].split()[-1]
+        if glibc_version < neovim_glibc_min_version:
+            self.info(f"Your glibc version ({glibc_version}) is lower than ({neovim_glibc_min_version}).")
+            self.info("You may need to install Neovim from source")
+            return False
+
         # 检查 Neovim 是否已安装
         if shutil.which("nvim") is not None:
             self.info("Neovim is already installed. Do you want to reinstall it? (y/N)")
