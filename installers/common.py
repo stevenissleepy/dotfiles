@@ -1,4 +1,6 @@
 import subprocess
+from pathlib import Path
+
 from .installer import Installer
 
 
@@ -19,4 +21,15 @@ class CommonInstaller(Installer):
 
     def post_install(self):
         self.info("configuring bash git vim...")
+
+        # stow dotfiles in ./common
+        self.backup_dotfiles()
         subprocess.run(["stow", "common"], check=True)
+
+    def backup_dotfiles(self):
+        files = [p.name for p in Path("common").iterdir() if p.is_file()]
+        home_files = [Path.home() / file for file in files]
+        for file in home_files:
+            if file.exists() and not file.is_symlink():
+                backup_path = file.with_suffix(file.suffix + ".backup")
+                file.rename(backup_path)
