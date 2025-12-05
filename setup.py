@@ -1,11 +1,17 @@
 import shutil
 import subprocess
 
+from clash import install_clash, clash_start, proxy_on
 from installers import Installer, CondaInstaller, ZshInstaller, StarshipInstaller
 
 
 def main():
     subprocess.run(["sudo", "-v"], check=True)
+
+    # 安装 clash 并启动
+    install_clash()
+    clash_start()
+    proxy_on()
 
     # 安装 stow
     if shutil.which("stow") is None:
@@ -14,8 +20,8 @@ def main():
 
     # 运行各个 installer
     installers = [
-        # CondaInstaller(),
-        # ZshInstaller(),
+        CondaInstaller(),
+        ZshInstaller(),
         StarshipInstaller(),
     ]
     for installer in installers:
