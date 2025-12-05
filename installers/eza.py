@@ -13,8 +13,9 @@ class EzaInstaller(Installer):
         self.info("Preparing to install eza...")
 
         # check eza repository
-        check = subprocess.run(["apt-cache", "policy", "eza"], capture_output=True, text=True)
-        if "Candidate: (none)" not in check.stdout:
+        result = subprocess.run(["apt-cache", "search", "^eza$"], capture_output=True, text=True)
+        has_eza = "eza" in result.stdout
+        if has_eza:
             return
 
         # add eza repository

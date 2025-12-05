@@ -23,10 +23,10 @@ class CommonInstaller(Installer):
         self.info("configuring bash git vim...")
 
         # stow dotfiles in ./common
-        self.backup_dotfiles()
+        self.backup_dotfiles_()
         subprocess.run(["stow", "common"], check=True)
 
-    def backup_dotfiles(self):
+    def backup_dotfiles_(self):
         files = [p.name for p in Path("common").iterdir() if p.is_file()]
         home_files = [Path.home() / file for file in files]
         for file in home_files:
