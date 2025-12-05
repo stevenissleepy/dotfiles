@@ -9,9 +9,7 @@ arch = platform.machine()
 tmp_dir = Path("/tmp")
 
 # miniconda
-miniconda_url = (
-    f"https://repo.anaconda.com/miniconda/Miniconda3-latest-{system}-{arch}.sh"
-)
+miniconda_url = f"https://repo.anaconda.com/miniconda/Miniconda3-latest-{system}-{arch}.sh"
 miniconda_path = Path.home() / "tools" / "miniconda3"
 
 # zsh
@@ -31,6 +29,5 @@ omz_plugins_urls = {
 }
 
 # starship
-starship_url = "https://gh.llkk.cc/https://github.com/starship/starship/releases"
 starship_installer_url = "https://starship.rs/install.sh"
 starship_installer_path = tmp_dir / "starship_install.sh"

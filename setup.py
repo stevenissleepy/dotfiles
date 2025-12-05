@@ -14,9 +14,9 @@ def main():
 
     # 运行各个 installer
     installers = [
-        CondaInstaller(),
-        ZshInstaller(),
-        # StarshipInstaller(),
+        # CondaInstaller(),
+        # ZshInstaller(),
+        StarshipInstaller(),
     ]
     for installer in installers:
         installer.run()

@@ -24,7 +24,7 @@ class ZshInstaller(Installer):
         # 检查 zsh 是否已安装
         if shutil.which("zsh") is not None:
             self.info("zsh is already installed. Do you want to reinstall it? (Y/n)")
-        
+
         # 直接询问用户是否继续安装
         else:
             self.info("zsh is not installed. Do you want to install it? (Y/n)")
