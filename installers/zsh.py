@@ -1,6 +1,7 @@
 import os
 import shutil
 import subprocess
+from pathlib import Path
 
 from .installer import Installer
 from .config import (
@@ -61,4 +62,8 @@ class ZshInstaller(Installer):
         subprocess.run(["sudo", "chsh", "-s", shutil.which("zsh")], check=True)
 
         # stow .zshrc
+        zshrc_path = Path.home() / ".zshrc"
+        if zshrc_path.exists() and not zshrc_path.is_symlink():
+            backup_path = zshrc_path.with_suffix(".bak")
+            zshrc_path.rename(backup_path)
         subprocess.run(["stow", "zsh"], check=True)
