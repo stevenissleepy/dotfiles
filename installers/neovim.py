@@ -31,7 +31,8 @@ class NeovimInstaller(Installer):
             return choice != "n"
 
     def pre_install(self):
-        pass
+        self.info("Preparing to install Neovim...")
+        subprocess.run(["sudo", "apt-get", "install", "-y", "wget"], check=True)
 
     def install(self):
         self.info("Installing Neovim...")
@@ -43,7 +44,7 @@ class NeovimInstaller(Installer):
         subprocess.run(["sudo", "mkdir", "-p", str(appimage_path.parent)], check=True)
 
         # 下载 Neovim AppImage
-        subprocess.run(["sudo", "curl", "-L", "-o", str(appimage_path), appimage_url], check=True)
+        subprocess.run(["sudo", "wget", "-L", "-O", str(appimage_path), appimage_url], check=True)
         subprocess.run(["sudo", "chmod", "755", str(appimage_path)], check=True)
 
         # 创建 symlink 到 /usr/local/bin
