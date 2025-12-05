@@ -21,18 +21,15 @@ class ZshInstaller(Installer):
     def ask_install(self):
         # 检查 zsh 是否已安装
         if shutil.which("zsh") is not None:
-            self.info("zsh is already installed. Do you want to reinstall it? (Y/n)")
+            self.info("zsh is already installed. Do you want to reinstall it? (y/N)")
+            choice = input().strip().lower()
+            return choice == "y"
 
         # 直接询问用户是否继续安装
         else:
             self.info("zsh is not installed. Do you want to install it? (Y/n)")
-
-        choice = input().strip().lower()
-        if choice == "n":
-            self.info("Skipping zsh installation.")
-            return False
-
-        return True
+            choice = input().strip().lower()
+            return choice != "n"
 
     def pre_install(self) -> bool:
         pass
