@@ -1,16 +1,9 @@
-import os
 import shutil
 import subprocess
 from pathlib import Path
 
 from .installer import Installer
-from .config import (
-    omz_path,
-    omz_plugins_path,
-    omz_plugins_urls,
-    omz_installer_url,
-    omz_installer_path,
-)
+from .config import zsh_plugins
 
 
 class ZshInstaller(Installer):
@@ -38,20 +31,9 @@ class ZshInstaller(Installer):
         self.info("Installing zsh...")
         subprocess.run(["sudo", "apt-get", "install", "-y", "zsh"], check=True)
 
-        # 安装 oh-my-zsh
-        self.info("Installing oh-my-zsh...")
-        shutil.rmtree(omz_path, ignore_errors=True)
-        os.remove(str(omz_installer_path)) if omz_installer_path.exists() else None
-        subprocess.run(["curl", "-fsSL", omz_installer_url, "-o", str(omz_installer_path)], check=True)
-        subprocess.run(["sh", str(omz_installer_path), "--unattended", "--keep-zshrc"], check=True)
-
-        # 安装 oh-my-zsh 插件
-        self.info("Installing oh-my-zsh plugins...")
-        omz_plugins_path.mkdir(parents=True, exist_ok=True)
-        for plugin, url in omz_plugins_urls.items():
-            plugin_path = omz_plugins_path / plugin
-            if not plugin_path.exists():
-                subprocess.run(["git", "clone", url, str(plugin_path)], check=True)
+        # 安装 zsh 插件
+        self.info("Installing zsh plugins...")
+        subprocess.run(["sudo", "apt-get", "install", "-y"] + list(zsh_plugins), check=True)
 
     def post_install(self):
         self.info("Configuring zsh...")

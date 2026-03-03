@@ -1,24 +1,4 @@
-# Starship
-ZSH_THEME=""
-eval "$(starship init zsh)"
-export STARSHIP_CONFIG="$HOME/.config/starship/robbyrussell.toml"
-
-# oh-my-zsh 
-plugins=(
-    git
-    copypath
-    copybuffer
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-)
-if [[ ! -n $TERMUX_VERSION ]]; then
-    plugins+=(zsh-vi-mode)
-fi
-export ZSH="$HOME/.oh-my-zsh"
-source $ZSH/oh-my-zsh.sh
-source $HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
-
-# Editor
+# editor
 if command -v nvim &> /dev/null; then
     export VISUAL='nvim'
 else
@@ -29,6 +9,16 @@ fi
 [[ -f ~/.aliases ]] && source ~/.aliases
 [[ -f ~/.path ]] && source ~/.path
 [[ -f ~/.unique_config ]] && source ~/.unique_config
+
+# Starship
+ZSH_THEME=""
+eval "$(starship init zsh)"
+export STARSHIP_CONFIG="$HOME/.config/starship/robbyrussell.toml"
+
+# plugins 
+source $HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # conda
 export PATH="$PATH:$HOME/tools/miniconda3/bin"

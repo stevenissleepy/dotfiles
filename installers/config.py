@@ -14,14 +14,9 @@ miniconda_installer_path = tmp_dir / "miniconda_installer.sh"
 miniconda_path = Path.home() / "tools" / "miniconda3"
 
 # zsh
-omz_installer_url = "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-omz_installer_path = tmp_dir / "omz_install.sh"
-omz_path = Path.home() / ".oh-my-zsh"
-omz_plugins_path = omz_path / "custom" / "plugins"
-omz_plugins_urls = {
-    "zsh-autosuggestions": "https://gitee.com/mirrors/zsh-autosuggestions.git",
-    "zsh-syntax-highlighting": "https://gitee.com/mirrors/zsh-syntax-highlighting.git",
-    "zsh-vi-mode": "https://gitee.com/mirrors_jeffreytse/zsh-vi-mode.git",
+zsh_plugins = {
+    "zsh-autosuggestions",
+    "zsh-syntax-highlighting",
 }
 
 # starship
