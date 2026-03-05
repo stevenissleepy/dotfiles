@@ -2,7 +2,7 @@
     name = steven
     email = stevenyjc@outlook.com
 [core]
-    editor = nvim
+    editor = vim
 [init]
     defaultBranch = main
 [credential]
