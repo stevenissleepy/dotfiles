@@ -1,3 +1,4 @@
+import tempfile
 import platform
 from pathlib import Path
 
@@ -6,7 +7,8 @@ system = platform.system()
 arch = platform.machine()
 
 # 临时目录
-tmp_dir = Path("/tmp")
+tmp_dir = tempfile.mkdtemp(prefix="dotfiles-")
+tmp_dir = Path(tmp_dir)
 
 # miniconda
 miniconda_installer_url = f"https://repo.anaconda.com/miniconda/Miniconda3-latest-{system}-{arch}.sh"

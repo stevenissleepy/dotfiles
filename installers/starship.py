@@ -1,4 +1,3 @@
-import os
 import shutil
 import subprocess
 
@@ -30,8 +29,8 @@ class StarshipInstaller(Installer):
         # 安装 Starship
         self.info("Installing Starship...")
         installer_url = starship_installer_url
-        installer_path = starship_installer_path
-        subprocess.run(["curl", "-sS", installer_url, "-o", installer_path], check=True)
+        installer_path = str(starship_installer_path)
+        subprocess.run(["curl", "-fL", installer_url, "-o", installer_path], check=True)
         subprocess.run(["sh", installer_path, "-y"], check=True)
 
     def post_install(self):

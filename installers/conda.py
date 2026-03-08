@@ -1,9 +1,10 @@
-import os
+import sys
 import shutil
 import subprocess
+from pathlib import Path
 
 from .installer import Installer
-from .config import tmp_dir, miniconda_path, miniconda_installer_url, miniconda_installer_path
+from .config import miniconda_path, miniconda_installer_url, miniconda_installer_path
 
 
 class CondaInstaller(Installer):
@@ -11,6 +12,16 @@ class CondaInstaller(Installer):
         super().__init__("conda")
 
     def ask_install(self) -> bool:
+        # 防止用 conda 的 Python 重装 conda, 导致正在运行的 Python 解释器被覆盖而崩溃 
+        running_exe = Path(sys.executable).resolve()
+        miniconda_prefix = miniconda_path.resolve()
+        if miniconda_prefix in running_exe.parents:
+            self.info("Error: 你正在使用 conda 中的 python 来重装 conda，这会覆盖正在运行的 python 解释器，导致崩溃。")
+            self.info("如果想要安装 conda，请使用系统 python 来重新运行该脚本。e.g. /usr/bin/python3 setup.py")
+            self.info("按任意键继续...")
+            choice = input().strip().lower()
+            return False
+
         # 检查 Conda 是否已安装
         if shutil.which("conda") is not None:
             self.info("Conda is already installed. Do you want to reinstall it? (y/N)")
@@ -28,19 +39,20 @@ class CondaInstaller(Installer):
 
     def install(self):
         self.info("Installing Miniconda...")
+
         installer_url = miniconda_installer_url
-        installer_path = miniconda_installer_path
-        subprocess.run(["curl", "-o", str(installer_path), installer_url], check=True)
-        subprocess.run(["bash", str(installer_path), "-b", "-u", "-p", str(miniconda_path)], check=True)
+        installer_path = str(miniconda_installer_path)
+        subprocess.run(["curl", "-fL", installer_url, "-o", installer_path], check=True)
+        subprocess.run(["bash", installer_path, "-b", "-u", "-p", str(miniconda_path)], check=True)
 
     def post_install(self):
         self.info("Configuring Miniconda...")
 
         # 禁用自动激活 base 环境
         # 禁止 conda 修改提示信息
-        conda_path = miniconda_path / "bin" / "conda"
-        subprocess.run([str(conda_path), "config", "--set", "auto_activate", "false"], check=True)
-        subprocess.run([str(conda_path), "config", "--set", "changeps1", "false"], check=True)
+        conda_path = str(miniconda_path / "bin" / "conda")
+        subprocess.run([conda_path, "config", "--set", "auto_activate", "false"], check=True)
+        subprocess.run([conda_path, "config", "--set", "changeps1", "false"], check=True)
 
         self.info("Conda installation complete.")
         pass
