@@ -9,7 +9,7 @@
 
 1. 自动安装并启用 clash，为后续安装做准备
 2. 简单配置 `bash` `git` `vim`
-3. 安装 zsh, oh-my-zsh 和 oh-my-zsh 常用插件
+3. 安装 zsh 和插件 zsh-autosuggestions, zsh-syntax-highlighting
 4. 安装 starship 并使用我的配置
 5. 安装 neovim 并使用我的配置
 6. 安装 conda，关闭 conda 的默认启动，禁止 conda 修改 prompt
