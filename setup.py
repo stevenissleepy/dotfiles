@@ -3,8 +3,9 @@ import shutil
 import subprocess
 from getpass import getpass
 
-from clash import install_clash, clash_start, proxy_on
+from clash import install_clash, clash_start, proxy_on, proxy_off
 from installers import (
+    tmp_dir,
     Installer,
     CommonInstaller,
     EzaInstaller,
@@ -47,16 +48,23 @@ def main():
         subprocess.run(["sudo", "apt-get", "install", "-y", "stow"], check=True)
 
     # 运行各个 installer
-    installers = [
-        CommonInstaller(),
-        EzaInstaller(),
-        ZshInstaller(password),
-        StarshipInstaller(),
-        NeovimInstaller(),
-        CondaInstaller(),
-    ]
-    for installer in installers:
-        installer.run()
+    try:
+        installers = [
+            CommonInstaller(),
+            EzaInstaller(),
+            ZshInstaller(password),
+            StarshipInstaller(),
+            NeovimInstaller(),
+            CondaInstaller(),
+        ]
+        for installer in installers:
+            installer.run()
+    except Exception as e:
+        print(f"Error occurred: {e}")
+
+    # 关闭 clash 并清理临时文件
+    proxy_off()
+    shutil.rmtree(tmp_dir)
 
 
 if __name__ == "__main__":

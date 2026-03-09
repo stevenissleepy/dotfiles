@@ -48,11 +48,10 @@ class CondaInstaller(Installer):
     def post_install(self):
         self.info("Configuring Miniconda...")
 
-        # 禁用自动激活 base 环境
-        # 禁止 conda 修改提示信息
-        conda_path = str(miniconda_path / "bin" / "conda")
-        subprocess.run([conda_path, "config", "--set", "auto_activate", "false"], check=True)
-        subprocess.run([conda_path, "config", "--set", "changeps1", "false"], check=True)
+        condarc_path = Path.home() / ".condarc"
+        if condarc_path.exists() and not condarc_path.is_symlink():
+            backup_path = condarc_path.with_suffix(".bak")
+            condarc_path.rename(backup_path)
 
-        self.info("Conda installation complete.")
-        pass
+        subprocess.run(["stow", "-d", "configs", "-t", str(Path.home()), "conda"], check=True)
+

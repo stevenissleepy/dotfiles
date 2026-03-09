@@ -47,4 +47,4 @@ class ZshInstaller(Installer):
         if zshrc_path.exists() and not zshrc_path.is_symlink():
             backup_path = zshrc_path.with_suffix(".bak")
             zshrc_path.rename(backup_path)
-        subprocess.run(["stow", "zsh"], check=True)
+        subprocess.run(["stow", "-d", "configs", "-t", str(Path.home()), "zsh"], check=True)

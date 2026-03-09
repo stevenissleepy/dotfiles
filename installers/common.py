@@ -22,12 +22,13 @@ class CommonInstaller(Installer):
     def post_install(self):
         self.info("configuring bash git vim...")
 
-        # stow dotfiles in ./common
+        # stow dotfiles in configs/common
         self.backup_dotfiles_()
-        subprocess.run(["stow", "common"], check=True)
+        subprocess.run(["stow", "-d", "configs", "-t", str(Path.home()), "common"], check=True)
 
     def backup_dotfiles_(self):
-        files = [p.name for p in Path("common").iterdir() if p.is_file()]
+        config_dir = Path("configs") / "common"
+        files = [p.name for p in config_dir.iterdir() if p.is_file()]
         home_files = [Path.home() / file for file in files]
         for file in home_files:
             if file.exists() and not file.is_symlink():

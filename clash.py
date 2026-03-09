@@ -47,7 +47,7 @@ def proxy_on():
     os.environ["NO_PROXY"] = "127.0.0.1,localhost"
 
 
-def clash_off():
+def proxy_off():
     """
     关闭代理
     """

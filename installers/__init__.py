@@ -1,3 +1,4 @@
+from .config import tmp_dir
 from .installer import Installer
 from .common import CommonInstaller
 from .eza import EzaInstaller

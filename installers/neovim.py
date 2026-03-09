@@ -1,6 +1,7 @@
-from pathlib import Path
 import shutil
 import subprocess
+from pathlib import Path
+
 from .installer import Installer
 from .config import neovim_appimage_url, neovim_appimage_path, neovim_glibc_min_version
 
@@ -54,4 +55,4 @@ class NeovimInstaller(Installer):
     def post_install(self):
         self.info("Configuring Neovim...")
 
-        subprocess.run(["stow", "nvim"], check=True)
+        subprocess.run(["stow", "-d", "configs", "-t", str(Path.home()), "nvim"], check=True)

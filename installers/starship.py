@@ -1,5 +1,6 @@
 import shutil
 import subprocess
+from pathlib import Path
 
 from .installer import Installer
 from .config import starship_installer_url, starship_installer_path
@@ -37,4 +38,4 @@ class StarshipInstaller(Installer):
         self.info("Configuring Starship...")
 
         # stow starship
-        subprocess.run(["stow", "starship"], check=True)
+        subprocess.run(["stow", "-d", "configs", "-t", str(Path.home()), "starship", ], check=True)
