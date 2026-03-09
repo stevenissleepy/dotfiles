@@ -34,8 +34,6 @@ return {
 
       -- lsp that used
       lspconfig.lua_ls.setup({ capabilities = capabilities })
-      lspconfig.clangd.setup({ capabilities = capabilities })
-      lspconfig.cmake.setup({ capabilities = capabilities })
 
       -- keymap
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
