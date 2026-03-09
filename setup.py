@@ -12,6 +12,7 @@ from installers import (
     ZshInstaller,
     StarshipInstaller,
     NeovimInstaller,
+    TmuxInstaller,
     CondaInstaller,
 )
 
@@ -55,6 +56,7 @@ def main():
             ZshInstaller(password),
             StarshipInstaller(),
             NeovimInstaller(),
+            TmuxInstaller(),
             CondaInstaller(),
         ]
         for installer in installers:

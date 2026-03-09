@@ -6,3 +6,4 @@ from .zsh import ZshInstaller
 from .starship import StarshipInstaller
 from .neovim import NeovimInstaller
 from .conda import CondaInstaller
+from .tmux import TmuxInstaller
