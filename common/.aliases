@@ -1,6 +1,11 @@
 # apt
 alias aptup='sudo apt update && sudo apt upgrade'
 
+# colors
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
 # eza
 if command -v eza >/dev/null 2>&1; then
   alias ls='eza --icons'
