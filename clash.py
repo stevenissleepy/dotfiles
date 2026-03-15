@@ -30,6 +30,10 @@ def clash_start():
     """
     启动 clash 服务
     """
+    # kill process on port 7890
+    subprocess.run(["sudo", "fuser", "-s", "-k", "7890/tcp"], check=True)
+
+    # start clash
     clash_path = CLASH_PATH
     start_script = clash_path / "start.sh"
     subprocess.run(["sudo", "bash", str(start_script)], check=True)
