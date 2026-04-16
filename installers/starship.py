@@ -3,7 +3,6 @@ import subprocess
 from pathlib import Path
 
 from .installer import Installer
-from .config import starship_installer_url, starship_installer_path
 
 
 class StarshipInstaller(Installer):
@@ -27,12 +26,8 @@ class StarshipInstaller(Installer):
         pass
 
     def install(self):
-        # 安装 Starship
         self.info("Installing Starship...")
-        installer_url = starship_installer_url
-        installer_path = str(starship_installer_path)
-        subprocess.run(["curl", "-fL", installer_url, "-o", installer_path], check=True)
-        subprocess.run(["sh", installer_path, "-y"], check=True)
+        subprocess.run(["sudo", "pacman", "-S", "--noconfirm", "--needed", "starship"], check=True)
 
     def post_install(self):
         self.info("Configuring Starship...")
