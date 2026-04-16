@@ -28,8 +28,8 @@ export STARSHIP_CONFIG="$HOME/.config/starship/robbyrussell.toml"
 
 # plugins 
 source $HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # conda
 export PATH="$PATH:$HOME/tools/miniconda3/bin"
