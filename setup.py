@@ -46,7 +46,7 @@ def main():
     # 安装 stow
     if shutil.which("stow") is None:
         Installer.info("Stow is not installed. Installing stow...")
-        subprocess.run(["sudo", "apt-get", "install", "-y", "stow"], check=True)
+        subprocess.run(["sudo", "pacman", "-S", "--noconfirm", "--needed", "stow"], check=True)
 
     # 运行各个 installer
     try:

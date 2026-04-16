@@ -29,11 +29,11 @@ class ZshInstaller(Installer):
 
     def install(self):
         self.info("Installing zsh...")
-        subprocess.run(["sudo", "apt-get", "install", "-y", "zsh"], check=True)
+        subprocess.run(["sudo", "pacman", "-S", "--noconfirm", "--needed", "zsh"], check=True)
 
         # 安装 zsh 插件
         self.info("Installing zsh plugins...")
-        subprocess.run(["sudo", "apt-get", "install", "-y"] + list(zsh_plugins), check=True)
+        subprocess.run(["sudo", "pacman", "-S", "--noconfirm", "--needed"] + list(zsh_plugins), check=True)
 
     def post_install(self):
         self.info("Configuring zsh...")

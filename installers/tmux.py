@@ -27,7 +27,7 @@ class TmuxInstaller(Installer):
 
     def install(self):
         # 安装 tmux
-        subprocess.run(["sudo", "apt", "install", "tmux", "-y"])
+        subprocess.run(["sudo", "pacman", "-S", "--noconfirm", "--needed", "tmux"], check=True)
 
     def post_install(self):
         self.info("Configuring tmux...")

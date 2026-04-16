@@ -33,7 +33,7 @@ class NeovimInstaller(Installer):
 
     def pre_install(self):
         self.info("Preparing to install Neovim...")
-        subprocess.run(["sudo", "apt-get", "install", "-y", "wget"], check=True)
+        subprocess.run(["sudo", "pacman", "-S", "--noconfirm", "--needed", "wget"], check=True)
 
     def install(self):
         self.info("Installing Neovim...")
