@@ -27,13 +27,12 @@ return {
     lazy = false,
 
     config = function()
-      local lspconfig = require("lspconfig")
-
       -- To facilitate the communication between LSP and CMP Engine
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      -- lsp that used
-      lspconfig.lua_ls.setup({ capabilities = capabilities })
+      -- lua_ls
+      vim.lsp.config("lua_ls", { capabilities = capabilities })
+      vim.lsp.enable("lua_ls")
 
       -- keymap
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
