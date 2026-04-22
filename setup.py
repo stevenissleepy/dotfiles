@@ -4,10 +4,10 @@ import argparse
 import subprocess
 from getpass import getpass
 
-from clash import install_clash, clash_start, proxy_on, proxy_off
 from installers import (
     tmp_dir,
     Installer,
+    ClashInstaller,
     CommonInstaller,
     EzaInstaller,
     ZshInstaller,
@@ -53,10 +53,9 @@ def main():
     password = sudo_warmup()
 
     # 安装 clash 并启动
-    install_clash()
-    if args.clash == "on":
-        clash_start()
-        proxy_on()
+    ClashInstaller.install()
+    ClashInstaller.start()
+    ClashInstaller.proxy_on()
 
     # 安装 stow
     if shutil.which("stow") is None:
@@ -80,8 +79,7 @@ def main():
         print(f"Error occurred: {e}")
 
     # 关闭 clash 并清理临时文件
-    if args.clash == "on":
-        proxy_off()
+    ClashInstaller.proxy_off()
     shutil.rmtree(tmp_dir)
 
 
