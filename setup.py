@@ -22,9 +22,9 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--clash",
-        choices=["on", "off"],
-        default="off",
-        help="enable clash proxy during installation",
+        metavar="URL",
+        default=None,
+        help="clash subscription url",
     )
     return parser.parse_args()
 
@@ -54,8 +54,9 @@ def main():
 
     # 安装 clash 并启动
     ClashInstaller.install()
-    ClashInstaller.start()
-    ClashInstaller.proxy_on()
+    if args.clash is not None:
+        ClashInstaller.start(args.clash)
+        ClashInstaller.proxy_on()
 
     # 安装 stow
     if shutil.which("stow") is None:
@@ -79,7 +80,9 @@ def main():
         print(f"Error occurred: {e}")
 
     # 关闭 clash 并清理临时文件
-    ClashInstaller.proxy_off()
+    if args.clash is not None:
+        ClashInstaller.proxy_off()
+        ClashInstaller.stop()
     shutil.rmtree(tmp_dir)
 
 

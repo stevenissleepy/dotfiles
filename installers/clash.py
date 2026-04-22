@@ -46,6 +46,10 @@ class ClashInstaller:
             )
 
     @staticmethod
+    def stop():
+        subprocess.run(["sudo", "fuser", "-s", "-k", "7890/tcp"], check=False)
+
+    @staticmethod
     def proxy_on():
         """
         开启代理
