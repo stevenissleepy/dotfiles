@@ -1,5 +1,6 @@
 import os
 import shutil
+import argparse
 import subprocess
 from getpass import getpass
 
@@ -15,6 +16,17 @@ from installers import (
     TmuxInstaller,
     CondaInstaller,
 )
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--clash",
+        metavar="URL",
+        default=None,
+        help="clash subscription url",
+    )
+    return parser.parse_args()
 
 
 def sudo_warmup() -> str:
@@ -35,13 +47,16 @@ def sudo_warmup() -> str:
 
 
 def main():
+    args = parse_args()
+
     # get sudo password
     password = sudo_warmup()
 
     # 安装 clash 并启动
     ClashInstaller.install()
-    ClashInstaller.start()
-    ClashInstaller.proxy_on()
+    if args.clash is not None:
+        ClashInstaller.start(args.clash)
+        ClashInstaller.proxy_on()
 
     # 安装 stow
     if shutil.which("stow") is None:
@@ -65,7 +80,9 @@ def main():
         print(f"Error occurred: {e}")
 
     # 关闭 clash 并清理临时文件
-    ClashInstaller.proxy_off()
+    if args.clash is not None:
+        ClashInstaller.proxy_off()
+        ClashInstaller.stop()
     shutil.rmtree(tmp_dir)
 
 
