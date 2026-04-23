@@ -38,3 +38,10 @@ neovim_arch = "x86_64" if arch in ["x86_64", "amd64"] else arch
 neovim_arch = "arm64" if arch in ["aarch64", "arm64"] else arch
 neovim_appimage_url = f"https://gh-proxy.org/https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-{neovim_arch}.appimage"
 neovim_appimage_path = "/opt/nvim/nvim.appimage"
+
+# tmux
+tmux_tpm_url = "https://github.com/tmux-plugins/tpm"
+tmux_tpm_path = Path.home() / ".config" / "tmux" / "plugins" / "tpm"
+tmux_catppuccin_version = "v2.3.0"
+tmux_catppuccin_url = "https://github.com/catppuccin/tmux.git"
+tmux_catppuccin_path = Path.home() / ".config" / "tmux" / "plugins" / "catppuccin"
