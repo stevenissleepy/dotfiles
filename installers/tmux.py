@@ -3,6 +3,13 @@ import subprocess
 from pathlib import Path
 
 from .installer import Installer
+from .config import (
+    tmux_tpm_url,
+    tmux_tpm_path,
+    tmux_catppuccin_version,
+    tmux_catppuccin_url,
+    tmux_catppuccin_path,
+)
 
 
 class TmuxInstaller(Installer):
@@ -32,5 +39,16 @@ class TmuxInstaller(Installer):
     def post_install(self):
         self.info("Configuring tmux...")
 
+        # tpm
+        tpm_url = tmux_tpm_url
+        tpm_path = tmux_tpm_path
+        subprocess.run(["git", "clone", tpm_url, str(tpm_path)], check=True)
+
+        # catppuccin
+        cpc_ver = tmux_catppuccin_version
+        cpc_url = tmux_catppuccin_url
+        cpc_path = tmux_catppuccin_path
+        subprocess.run(["git", "clone", "-b", cpc_ver, cpc_url, str(cpc_path)], check=True)
+
         # stow tmux
-        subprocess.run(["stow", "-d", "configs", "-t", str(Path.home()), "tmux", ], check=True)
+        subprocess.run(["stow", "-d", "configs", "-t", str(Path.home()), "tmux"], check=True)
