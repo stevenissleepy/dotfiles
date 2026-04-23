@@ -53,8 +53,8 @@ def main():
     password = sudo_warmup()
 
     # 安装 clash 并启动
-    ClashInstaller.install()
     if args.clash is not None:
+        ClashInstaller.install()
         ClashInstaller.start(args.clash)
         ClashInstaller.proxy_on()
 
