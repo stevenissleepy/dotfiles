@@ -11,9 +11,10 @@ tmp_dir = tempfile.mkdtemp(prefix="dotfiles-")
 tmp_dir = Path(tmp_dir)
 
 # clash
-mihomo_arch = "amd64" if arch in ["x86_64", "amd64"] else arch
-mihomo_arch = "arm64" if arch in ["aarch64", "arm64"] else arch
-mihomo_url = f"https://github.com/MetaCubeX/mihomo/releases/download/v1.19.24/mihomo-linux-{mihomo_arch}-v3-v1.19.24.gz"
+mihomo_arch = arch
+mihomo_arch = "amd64" if mihomo_arch in ["x86_64", "amd64"] else mihomo_arch
+mihomo_arch = "arm64" if mihomo_arch in ["aarch64", "arm64"] else mihomo_arch
+mihomo_url = f"https://gh-proxy.org/https://github.com/MetaCubeX/mihomo/releases/download/v1.19.24/mihomo-linux-{mihomo_arch}-v3-v1.19.24.gz"
 mihomo_bin_dir = Path("/usr/local/bin/")
 mihomo_config_dir = Path("/etc/mihomo/")
 mihomo_service_dir = Path("/etc/systemd/system/")
@@ -54,8 +55,9 @@ starship_installer_path = tmp_dir / "starship_install.sh"
 
 # neovim
 neovim_glibc_min_version = "2.34"
-neovim_arch = "x86_64" if arch in ["x86_64", "amd64"] else arch
-neovim_arch = "arm64" if arch in ["aarch64", "arm64"] else arch
+neovim_arch = arch
+neovim_arch = "x86_64" if neovim_arch in ["x86_64", "amd64"] else neovim_arch
+neovim_arch = "arm64" if neovim_arch in ["aarch64", "arm64"] else neovim_arch
 neovim_appimage_url = f"https://gh-proxy.org/https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-{neovim_arch}.appimage"
 neovim_appimage_path = "/opt/nvim/nvim.appimage"
 
