@@ -2,7 +2,7 @@
 
 ## ✨ 介绍
 
-这是 Steven 的的个人代码环境自动化部署工具，为 Zsh + Noevim + Tmux workflow 而设计
+这是 Steven 的的个人代码环境自动化部署工具，为 Zsh + Neovim + Tmux workflow 而设计
 
 
 ## 🚀 Features
@@ -29,24 +29,27 @@ python setup.py --clash your_clash_subscription_url
 ```
 
 
-## 关于 Clash
+## 🌐 关于 Clash
 
 关于本脚本使用的 clash，你可能需要知道下面这些内容
 
-- 如果你选择使用 `--clash`，本脚本会自动在 `/usr/local/bin` 下面安装 clash 的 `mihomo` 内核
+- 如果你选择使用 `--clash`，本脚本会
+    - 在 `/usr/local/bin` 下面安装 clash 的 `mihomo` 内核
+    - 创建 `/etc/systemd/system/mihomo.service` 服务
 - 你可以使用机场提供的 clash 订阅链接，直接放在 `--clash` 后面即可
 - 你也可以选择使用本地的 `yaml` 文件，例如 `--clash file:///home/abc/config.yaml`
-- 本脚本会将订阅文件放在 `~/.config/mihomo/configs/config.yaml`
-- 本脚本会在结束后退出代理环境，并关闭 `mihomo` 内核
+- 本脚本会将订阅文件放在 `/etc/mihomo/config.yaml`
+- 本脚本会在结束后退出代理环境，并且关闭 `mihomo.service` 服务
 
-如果以后你想在 shell 中使用代理，你可以这样做
+如果你打算以后长期使用本脚本提供的 clash 服务，你可以将 `mihomo.service` 设为开机启动
 
 ```sh
-# 后台启动 mihomo 内核 
-mihomo -f ~/.config/mihomo/configs/config.yaml > /dev/null &
-# 或者 mihomo -f your_clash_subscription_url > /dev/null &
+sudo systemctl enable --now mihomo
+```
 
-# 设置环境变量
+将以下的内容保存为一个 `proxy.sh` 脚本  
+
+```sh
 export http_proxy=http://127.0.0.1:7890
 export https_proxy=http://127.0.0.1:7890
 export no_proxy=127.0.0.1,localhost
@@ -56,7 +59,7 @@ export NO_PROXY=127.0.0.1,localhost
 echo -e "\033[32m[√] 已开启代理\033[0m"
 ```
 
-> 你可以把上面的脚本保存成一个 `.sh` 文件，这样以后就可以一键启动
+这样以后就可以通过 `source proxy.sh` 一键启动代理
 
 更多关于 clash 的内容，请参见[mihomo wiki](https://wiki.metacubex.one/startup/)
 
