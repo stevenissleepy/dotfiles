@@ -1,8 +1,16 @@
 import os
 import shutil
 import subprocess
+from pathlib import Path
 
-from .config import tmp_dir, mihomo_url, mihomo_bin, clash_config_dir
+from .config import (
+    tmp_dir,
+    mihomo_url,
+    mihomo_bin_dir,
+    mihomo_config_dir,
+    mihomo_service_dir,
+    mihomo_service_content,
+)
 
 
 class ClashInstaller:
@@ -12,42 +20,42 @@ class ClashInstaller:
         """
         安装 clash
         """
-        if shutil.which("mihomo") is not None:
-            return
+        # 安装 mihomo 内核
+        if shutil.which("mihomo") is None:
+            archive_path = tmp_dir / "mihomo.gz"
+            mihomo_bin = mihomo_bin_dir / "mihomo"
+            mihomo_bin_tmp = tmp_dir / "mihomo"
 
-        archive_path = tmp_dir / "mihomo.gz"
-        binary_path = tmp_dir / "mihomo"
+            subprocess.run(["sudo", "rm", "-rf", str(archive_path)], check=True)
+            subprocess.run(["sudo", "rm", "-rf", str(mihomo_bin_tmp)], check=True)
+            subprocess.run(["curl", "-fsSL", mihomo_url, "-o", str(archive_path)], check=True)
+            with mihomo_bin_tmp.open("wb") as binary_file:
+                subprocess.run(["gunzip", "-c", str(archive_path)], check=True, stdout=binary_file)
+            subprocess.run(["sudo", "install", "-m", "755", str(mihomo_bin_tmp), str(mihomo_bin)], check=True)
 
-        # 清理旧文件
-        subprocess.run(["sudo", "rm", "-rf", str(archive_path)], check=True)
-        subprocess.run(["sudo", "rm", "-rf", str(binary_path)], check=True)
-
-        # 安装 mihomo
-        subprocess.run(["curl", "-fsSL", mihomo_url, "-o", str(archive_path)], check=True)
-        with binary_path.open("wb") as binary_file:
-            subprocess.run(["gunzip", "-c", str(archive_path)], check=True, stdout=binary_file)
-        subprocess.run(["sudo", "install", "-m", "755", str(binary_path), str(mihomo_bin)], check=True)
+        # 创建 mihomo service
+        srv_file = mihomo_service_dir / "mihomo.service"
+        srv_file_tmp = tmp_dir / "mihomo.service"
+        with Path(srv_file_tmp).open("w", encoding="utf-8") as file:
+            file.write(mihomo_service_content)
+        subprocess.run(["sudo", "mkdir", "-p", str(mihomo_service_dir)], check=True)
+        subprocess.run(["sudo", "install", "-m", "644", str(srv_file_tmp), str(srv_file)], check=True)
 
     @staticmethod
     def start(clash_url):
-        clash_config_path = clash_config_dir / "config.yaml"
-        clash_log_path = tmp_dir / "clash.log"
-        subprocess.run(["mkdir", "-p", str(clash_config_dir)], check=True)
-        subprocess.run(["sudo", "fuser", "-s", "-k", "7890/tcp"], check=False)
-        subprocess.run(["curl", "-fsSL", clash_url, "-o", str(clash_config_path)], check=True)
-
-        # mihomo 是常驻进程，这里后台拉起，避免阻塞安装流程。
-        with clash_log_path.open("ab") as log_file:
-            subprocess.Popen(
-                ["mihomo", "-f", str(clash_config_path)],
-                stdout=log_file,
-                stderr=subprocess.STDOUT,
-                start_new_session=True,
-            )
+        """
+        启动 mihomo service
+        """
+        config_file = mihomo_config_dir / "config.yaml"
+        config_file_tmp = tmp_dir / "config.yaml"
+        subprocess.run(["curl", "-fsSL", clash_url, "-o", str(config_file_tmp)], check=True)
+        subprocess.run(["sudo", "install", "-m", "644", str(config_file_tmp), str(config_file)], check=True)
+        subprocess.run(["sudo", "systemctl", "daemon-reload"], check=True)
+        subprocess.run(["sudo", "systemctl", "start", "mihomo.service"], check=True)
 
     @staticmethod
     def stop():
-        subprocess.run(["sudo", "fuser", "-s", "-k", "7890/tcp"], check=False)
+        subprocess.run(["sudo", "systemctl", "stop", "mihomo.service"], check=True)
 
     @staticmethod
     def proxy_on():
