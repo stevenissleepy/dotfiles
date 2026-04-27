@@ -1,12 +1,9 @@
 import os
-import shutil
 import subprocess
 from pathlib import Path
 
 from .config import (
     tmp_dir,
-    mihomo_url,
-    mihomo_bin_dir,
     mihomo_config_dir,
     mihomo_service_dir,
     mihomo_service_content,
@@ -21,17 +18,7 @@ class ClashInstaller:
         安装 clash
         """
         # 安装 mihomo 内核
-        if shutil.which("mihomo") is None:
-            archive_path = tmp_dir / "mihomo.gz"
-            mihomo_bin = mihomo_bin_dir / "mihomo"
-            mihomo_bin_tmp = tmp_dir / "mihomo"
-
-            subprocess.run(["sudo", "rm", "-rf", str(archive_path)], check=True)
-            subprocess.run(["sudo", "rm", "-rf", str(mihomo_bin_tmp)], check=True)
-            subprocess.run(["curl", "-fsSL", mihomo_url, "-o", str(archive_path)], check=True)
-            with mihomo_bin_tmp.open("wb") as binary_file:
-                subprocess.run(["gunzip", "-c", str(archive_path)], check=True, stdout=binary_file)
-            subprocess.run(["sudo", "install", "-m", "755", str(mihomo_bin_tmp), str(mihomo_bin)], check=True)
+        subprocess.run(["sudo", "pacman", "-S", "--noconfirm", "mihomo"], check=True)
 
         # 创建 mihomo service
         srv_file = mihomo_service_dir / "mihomo.service"

@@ -11,10 +11,6 @@ tmp_dir = tempfile.mkdtemp(prefix="dotfiles-")
 tmp_dir = Path(tmp_dir)
 
 # clash
-mihomo_arch = "amd64" if arch in ["x86_64", "amd64"] else arch
-mihomo_arch = "arm64" if arch in ["aarch64", "arm64"] else arch
-mihomo_url = f"https://github.com/MetaCubeX/mihomo/releases/download/v1.19.24/mihomo-linux-{mihomo_arch}-v3-v1.19.24.gz"
-mihomo_bin_dir = Path("/usr/local/bin/")
 mihomo_config_dir = Path("/etc/mihomo/")
 mihomo_service_dir = Path("/etc/systemd/system/")
 mihomo_service_content = """[Unit]
@@ -29,7 +25,7 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_RAW CAP_NET_BIND_SERVICE CAP_SYS_TIM
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_RAW CAP_NET_BIND_SERVICE CAP_SYS_TIME CAP_SYS_PTRACE CAP_DAC_READ_SEARCH CAP_DAC_OVERRIDE
 Restart=always
 ExecStartPre=/usr/bin/sleep 1s
-ExecStart=/usr/local/bin/mihomo -d /etc/mihomo
+ExecStart=/usr/bin/mihomo -d /etc/mihomo
 ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]
