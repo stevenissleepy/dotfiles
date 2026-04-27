@@ -1,0 +1,120 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "display": {
+        "separator": "  "
+    },
+    "modules": [
+        {
+            "type": "host",
+            "key": "PC",
+            "keyColor": "#8AADF4"
+        },
+        {
+            "type": "cpu",
+            "key": "├─󰻠  CPU",
+            "keyColor": "#8AADF4"
+        },
+        {
+            "type": "gpu",
+            "key": "├─󰍛  GPU",
+            "keyColor": "#8AADF4"
+        },
+        {
+            "type": "memory",
+            "key": "├─󰑭  MEM",
+            "keyColor": "#8AADF4"
+        },
+        {
+            "type": "swap",
+            "key": "├─󰓡  SWA",
+            "keyColor": "#8AADF4"
+        },
+        {
+            "type": "disk",
+            "key": "├─  DIS",
+            "keyColor": "#8AADF4"
+        },
+        {
+            "type": "display",
+            "key": "╰─󰍹  DSP",
+            "keyColor": "#8AADF4"
+        },
+        "break",
+
+        {
+            "type": "wm",
+            "key": "VM",
+            "keyColor": "#F5BDE6"
+        },
+        {
+            "type": "shell",
+            "key": "├─  SHE",
+            "keyColor": "#F5BDE6"
+        },
+        {
+            "type": "terminal",
+            "key": "├─  TER",
+            "keyColor": "#F5BDE6"
+        },
+        {
+            "type": "terminalfont",
+            "key": "├─  TFO",
+            "keyColor": "#F5BDE6"
+        },
+        {
+            "type": "icons",
+            "key": "├─󰀻  ICO",
+            "keyColor": "#F5BDE6"
+        },
+        {
+            "type": "wallpaper",
+            "key": "╰─󰸉  WAL",
+            "keyColor": "#F5BDE6"
+        },
+        "break",
+
+        {
+            "type": "os",
+            "key": "OS",
+            "keyColor": "#B7BDF8"
+        },
+        {
+            "type": "title",
+            "key": "├─  USR",
+            "format": "{user-name}@{host-name}",
+            "keyColor": "#B7BDF8"
+        },
+        {
+            "type": "kernel",
+            "key": "├─  KER",
+            "keyColor": "#B7BDF8"
+        },
+        {
+            "type": "packages",
+            "key": "├─󰏖  PKG",
+            "keyColor": "#B7BDF8"
+        },
+        {
+            "type": "uptime",
+            "key": "├─󰅐  UPT",
+            "keyColor": "#B7BDF8"
+        },
+        {
+            "type": "localip",
+            "key": "├─󰩟  LOC",
+            "compact": true,
+            "keyColor": "#B7BDF8"
+        },
+        {
+            "type": "publicip",
+            "key": "├─󰩠  PUB",
+            "keyColor": "#B7BDF8",
+            "timeout": 1000
+        },
+        {
+            "type": "locale",
+            "key": "╰─  LOC",
+            "keyColor": "#B7BDF8"
+        }
+    ]
+}
