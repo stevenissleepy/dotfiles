@@ -49,3 +49,7 @@ class ZshInstaller(Installer):
             backup_path = zshrc_path.with_suffix(".bak")
             zshrc_path.rename(backup_path)
         subprocess.run(["stow", "-d", "configs", "-t", str(Path.home()), "zsh"], check=True)
+
+        # stow zsh tools' configs
+        subprocess.run(["stow", "-d", "configs", "-t", str(Path.home()), "fastfetch"], check=True)
+        subprocess.run(["stow", "-d", "configs", "-t", str(Path.home()), "yazi"], check=True)

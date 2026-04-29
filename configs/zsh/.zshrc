@@ -31,6 +31,9 @@ source $HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# tools
+eval "$(zoxide init zsh --cmd j)" # zoxide
+
 # conda
 export PATH="$PATH:$HOME/tools/miniconda3/bin"
 if command -v conda &> /dev/null; then

@@ -44,13 +44,14 @@ zsh_plugins = {
     "zsh-syntax-highlighting",
 }
 zsh_tools = {
+    "fastfetch",# fastfetch
     "eza",      # eza
     "zoxide",   # zoxide
     "fzf",      # fzf
     "yazi",     # yazi and its dependencies
-    "ffmpeg",   
-    "7zip",     
-    "jq",       
+    "ffmpeg",
+    "7zip",
+    "jq",
     "poppler",
     "fd",
     "ripgrep",
