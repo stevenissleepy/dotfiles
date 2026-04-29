@@ -3,7 +3,13 @@ import subprocess
 from pathlib import Path
 
 from .installer import Installer
-from .config import neovim_appimage_url, neovim_appimage_path, neovim_glibc_min_version
+from .config import (
+    tmp_dir,
+    neovim_glibc_min_version,
+    neovim_url,
+    neovim_appimage_dir,
+    neovim_bin_dir,
+)
 
 
 class NeovimInstaller(Installer):
@@ -32,25 +38,26 @@ class NeovimInstaller(Installer):
             return choice != "n"
 
     def pre_install(self):
-        self.info("Preparing to install Neovim...")
-        subprocess.run(["sudo", "apt-get", "install", "-y", "wget"], check=True)
+        pass
 
     def install(self):
         self.info("Installing Neovim...")
-        appimage_url = neovim_appimage_url
-        appimage_path = Path(neovim_appimage_path)
 
         # 删除已有的 AppImage 文件
-        subprocess.run(["sudo", "rm", "-rf", str(appimage_path.parent)], check=True)
-        subprocess.run(["sudo", "mkdir", "-p", str(appimage_path.parent)], check=True)
+        subprocess.run(["sudo", "rm", "-rf", str(neovim_appimage_dir)], check=True)
+        subprocess.run(["sudo", "mkdir", "-p", str(neovim_appimage_dir)], check=True)
 
         # 下载 Neovim AppImage
-        subprocess.run(["sudo", "wget", "-L", "-O", str(appimage_path), appimage_url], check=True)
-        subprocess.run(["sudo", "chmod", "755", str(appimage_path)], check=True)
+        appimage_tmp = tmp_dir / "nvim.appimage"
+        appimage = neovim_appimage_dir / "nvim.appimage"
+        subprocess.run(["curl", "-fL", neovim_url, "-o", str(appimage_tmp)], check=True)
+        subprocess.run(["sudo", "mv", str(appimage_tmp), str(appimage)], check=True)
+        subprocess.run(["sudo", "chmod", "755", str(appimage)], check=True)
 
         # 创建 symlink 到 /usr/local/bin
-        symlink_path = Path("/usr/local/bin/nvim")
-        subprocess.run(["sudo", "ln", "-sf", str(appimage_path), str(symlink_path)], check=True)
+        neovim_bin = neovim_bin_dir / "nvim"
+        subprocess.run(["sudo", "mkdir", "-p", str(neovim_bin_dir)], check=True)
+        subprocess.run(["sudo", "ln", "-sf", str(appimage), str(neovim_bin)], check=True)
 
     def post_install(self):
         self.info("Configuring Neovim...")
