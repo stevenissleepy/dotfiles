@@ -9,7 +9,6 @@ from installers import (
     Installer,
     ClashInstaller,
     CommonInstaller,
-    EzaInstaller,
     ZshInstaller,
     StarshipInstaller,
     NeovimInstaller,
@@ -67,7 +66,6 @@ def main():
     try:
         installers = [
             CommonInstaller(),
-            EzaInstaller(),
             ZshInstaller(password),
             StarshipInstaller(),
             NeovimInstaller(),

@@ -3,7 +3,7 @@ import subprocess
 from pathlib import Path
 
 from .installer import Installer
-from .config import zsh_plugins
+from .config import zsh_plugins, zsh_tools
 
 
 class ZshInstaller(Installer):
@@ -31,9 +31,10 @@ class ZshInstaller(Installer):
         self.info("Installing zsh...")
         subprocess.run(["sudo", "pacman", "-S", "--noconfirm", "--needed", "zsh"], check=True)
 
-        # 安装 zsh 插件
+        # 安装 zsh plugins 和 tools
         self.info("Installing zsh plugins...")
         subprocess.run(["sudo", "pacman", "-S", "--noconfirm", "--needed"] + list(zsh_plugins), check=True)
+        subprocess.run(["sudo", "pacman", "-S", "--noconfirm", "--needed"] + list(zsh_tools), check=True)
 
     def post_install(self):
         self.info("Configuring zsh...")

@@ -43,6 +43,20 @@ zsh_plugins = {
     "zsh-autosuggestions",
     "zsh-syntax-highlighting",
 }
+zsh_tools = {
+    "eza",      # eza
+    "zoxide",   # zoxide
+    "fzf",      # fzf
+    "yazi",     # yazi and its dependencies
+    "ffmpeg",   
+    "7zip",     
+    "jq",       
+    "poppler",
+    "fd",
+    "ripgrep",
+    "resvg",
+    "imagemagick",
+}
 
 # tmux
 tmux_tpm_url = "https://github.com/tmux-plugins/tpm"
