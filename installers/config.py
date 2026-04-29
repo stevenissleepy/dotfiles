@@ -49,6 +49,27 @@ zsh_plugins = {
     "zsh-syntax-highlighting",
 }
 
+# yazi
+yazi_arch = arch
+yazi_arch = "x86_64" if yazi_arch in ["x86_64", "amd64"] else yazi_arch
+yazi_arch = "aarch64" if yazi_arch in ["aarch64", "arm64"] else yazi_arch
+yazi_release = f"yazi-{yazi_arch}-unknown-linux-gnu"
+yazi_url = f"https://github.com/sxyazi/yazi/releases/latest/download/{yazi_release}.zip"
+yazi_bin_dir = Path("/usr/local/bin/")
+yazi_deps = {
+    "curl",
+    "unzip",
+    "ffmpeg",
+    "7zip",
+    "jq",
+    "poppler-utils",
+    "fd-find",
+    "ripgrep",
+    "fzf",
+    "zoxide",
+    "imagemagick"
+}
+
 # starship
 starship_installer_url = "https://starship.rs/install.sh"
 starship_installer_path = tmp_dir / "starship_install.sh"

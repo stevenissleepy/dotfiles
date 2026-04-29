@@ -9,8 +9,9 @@ from installers import (
     Installer,
     ClashInstaller,
     CommonInstaller,
-    EzaInstaller,
     ZshInstaller,
+    EzaInstaller,
+    YaziInstaller,
     StarshipInstaller,
     NeovimInstaller,
     TmuxInstaller,
@@ -67,8 +68,9 @@ def main():
     try:
         installers = [
             CommonInstaller(),
-            EzaInstaller(),
             ZshInstaller(password),
+            EzaInstaller(),
+            YaziInstaller(),
             StarshipInstaller(),
             NeovimInstaller(),
             TmuxInstaller(),

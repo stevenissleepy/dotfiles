@@ -8,3 +8,4 @@ from .neovim import NeovimInstaller
 from .conda import CondaInstaller
 from .tmux import TmuxInstaller
 from .clash import ClashInstaller
+from .yazi import YaziInstaller
