@@ -30,7 +30,7 @@ class ClashInstaller:
 
             subprocess.run(["sudo", "rm", "-rf", str(archive_path)], check=True)
             subprocess.run(["sudo", "rm", "-rf", str(mihomo_bin_tmp)], check=True)
-            subprocess.run(["curl", "-fsSL", mihomo_url, "-o", str(archive_path)], check=True)
+            subprocess.run(["curl", "-fL", mihomo_url, "-o", str(archive_path)], check=True)
             with mihomo_bin_tmp.open("wb") as binary_file:
                 subprocess.run(["gunzip", "-c", str(archive_path)], check=True, stdout=binary_file)
             subprocess.run(["sudo", "install", "-m", "755", str(mihomo_bin_tmp), str(mihomo_bin)], check=True)
