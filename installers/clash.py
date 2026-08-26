@@ -5,6 +5,7 @@ from pathlib import Path
 from .installer import Installer
 from .config import (
     tmp_dir,
+    mihomo_geodata_urls,
     mihomo_config_dir,
     mihomo_service_dir,
     mihomo_service_content,
@@ -36,12 +37,24 @@ class ClashInstaller:
         """
         启动 mihomo service
         """
-        Installer.info("Starting clash service...")
+        # install mihomo config.yaml
         config_file = mihomo_config_dir / "config.yaml"
         config_file_tmp = tmp_dir / "config.yaml"
         subprocess.run(["curl", "-fsSL", clash_url, "-o", str(config_file_tmp)], check=True)
         subprocess.run(["sudo", "mkdir", "-p", str(mihomo_config_dir)], check=True)
         subprocess.run(["sudo", "install", "-m", "644", str(config_file_tmp), str(config_file)], check=True)
+
+        # install mihomo geodata files if they do not exist
+        for filename, url in mihomo_geodata_urls.items():
+            destination = mihomo_config_dir / filename
+            if destination.exists():
+                continue
+            Installer.info(f"Downloading Mihomo geodata ({filename})...")
+            download = tmp_dir / filename
+            subprocess.run(["curl", "-fL", url, "-o", str(download)], check=True)
+            subprocess.run(["sudo", "install", "-m", "644", str(download), str(destination)], check=True)
+
+        Installer.info("Starting clash service...")
         subprocess.run(["sudo", "systemctl", "daemon-reload"], check=True)
         subprocess.run(["sudo", "systemctl", "start", "mihomo.service"], check=True)
 

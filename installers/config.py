@@ -11,6 +11,13 @@ tmp_dir = tempfile.mkdtemp(prefix="dotfiles-")
 tmp_dir = Path(tmp_dir)
 
 # clash
+mihomo_geodata_base_url = "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest"
+mihomo_geodata_urls = {
+    "geoip.dat": f"{mihomo_geodata_base_url}/geoip.dat",
+    "geosite.dat": f"{mihomo_geodata_base_url}/geosite.dat",
+    "Country.mmdb": f"{mihomo_geodata_base_url}/country.mmdb",
+    "ASN.mmdb": f"{mihomo_geodata_base_url}/GeoLite2-ASN.mmdb",
+}
 mihomo_config_dir = Path("/etc/mihomo/")
 mihomo_service_dir = Path("/etc/systemd/system/")
 mihomo_service_content = """[Unit]
