@@ -15,6 +15,13 @@ mihomo_arch = arch
 mihomo_arch = "amd64" if mihomo_arch in ["x86_64", "amd64"] else mihomo_arch
 mihomo_arch = "arm64" if mihomo_arch in ["aarch64", "arm64"] else mihomo_arch
 mihomo_url = f"https://gh-proxy.org/https://github.com/MetaCubeX/mihomo/releases/download/v1.19.24/mihomo-linux-{mihomo_arch}-v3-v1.19.24.gz"
+mihomo_geodata_base_url = "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest"
+mihomo_geodata_urls = {
+    "geoip.dat": f"{mihomo_geodata_base_url}/geoip.dat",
+    "geosite.dat": f"{mihomo_geodata_base_url}/geosite.dat",
+    "Country.mmdb": f"{mihomo_geodata_base_url}/country.mmdb",
+    "ASN.mmdb": f"{mihomo_geodata_base_url}/GeoLite2-ASN.mmdb",
+}
 mihomo_bin_dir = Path("/usr/local/bin/")
 mihomo_config_dir = Path("/etc/mihomo/")
 mihomo_service_dir = Path("/etc/systemd/system/")
